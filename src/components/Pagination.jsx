@@ -3,19 +3,19 @@ import { Box, Button, Select, Text } from '@chakra-ui/react';
 import TaskContext from '../context/TaskContext';
 
 const Pagination = () => {
-  const { tasks ,tasksPerPage, setTasksPerPage,currentPage, setCurrentPage} = useContext(TaskContext);
-const [selectedValue, setSelectedValue] = useState(tasksPerPage);
+  const { tasks, tasksPerPage, setTasksPerPage, currentPage, setCurrentPage } = useContext(TaskContext);
+  const [selectedValue, setSelectedValue] = useState(tasksPerPage);
 
-const paginate = (pageNumber) => setCurrentPage(pageNumber);
-const handleDropdown = (event ) =>{
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handleDropdown = (event) => {
     const newSize = parseInt(event.target.value, 10);
     setSelectedValue(newSize);
     setTasksPerPage(newSize);
     paginate(1);
-};
-const startIndex = (currentPage - 1) * tasksPerPage + 1;
-const endIndex = Math.min(currentPage * tasksPerPage, tasks.length);
-const totalPages = Math.ceil(tasks.length / tasksPerPage);
+  };
+  const startIndex = (currentPage - 1) * tasksPerPage + 1;
+  const endIndex = Math.min(currentPage * tasksPerPage, tasks.length);
+  const totalPages = Math.ceil(tasks.length / tasksPerPage);
 
 
   return (

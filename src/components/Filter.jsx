@@ -21,7 +21,7 @@ const Filter = () => {
         if (status === 'all') {
             filteredTasks = originalTasks;
         } else {
-            filteredTasks = tasks.filter((task) => task.status === status);
+            filteredTasks = originalTasks.filter((task) => task.status === status);
         }
 
         setTasks(filteredTasks);

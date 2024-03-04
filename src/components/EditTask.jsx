@@ -2,30 +2,49 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react';
 import TaskContext from '../context/TaskContext';
 import axios from 'axios';
+import { useToast } from '@chakra-ui/react';
 
-const EditTask = ({ isOpen, onClose, t }) => {
-    const {
-        tasks,  setTasks, setSelectedTask, } = useContext(TaskContext);
+const EditTask = ({ isOpen, onClose, task }) => {
 
-  const [editedTask, setEditedTask] = useState(t);
-  const [ isChange, setIsChange ] = useState(false);
+  const { tasks, setTasks, setSelectedTask, } = useContext(TaskContext);
+  const [editedTask, setEditedTask] = useState(task);
+  const [isChange, setIsChange] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
-    if (t) {
-      setEditedTask(t);
+    if (task) {
+      setEditedTask(task);
     }
-  }, [t]);
+  }, [task]);
 
   const handleUpdateTask = async () => {
     try {
-      await axios.put(`http://localhost:3000/tasks/${editedTask.id}`, editedTask);
+      const response = await axios.put(`http://localhost:3000/tasks/${editedTask.id}`, editedTask);
 
-      const updatedTaskList = tasks.map((task) =>
-        task.id === editedTask.id ? editedTask : task
-      );
-      setTasks(updatedTaskList);
-      setSelectedTask(null);
-      onClose();
+      if (response.status === 200) {
+        const updatedTaskList = tasks.map((task) =>
+          task.id === editedTask.id ? editedTask : task
+        );
+        setTasks(updatedTaskList);
+        setSelectedTask(null);
+        onClose();
+        toast({
+          title: 'Task Updated',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        console.error('Error updating task:', error);
+
+        toast({
+          title: 'Error Updating Task',
+          description: 'An error occurred while updating the task.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       console.error('Error updating task:', error);
     }
@@ -35,7 +54,9 @@ const EditTask = ({ isOpen, onClose, t }) => {
       ...prevTask,
       [field]: value,
     }));
-    setIsChange(true);
+
+    const hasChanged = value !== task[field];
+    setIsChange(hasChanged);
   };
 
   return (

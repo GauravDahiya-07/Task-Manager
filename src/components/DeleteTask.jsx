@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  AlertDialog, AlertDialogOverlay,AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter,
-  Button,} from '@chakra-ui/react';
+  AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter,
+  Button
+} from '@chakra-ui/react';
 
 const DeleteTask = ({ isOpen, onClose, onDeleteConfirm, onDeleteCancel }) => {
   return (

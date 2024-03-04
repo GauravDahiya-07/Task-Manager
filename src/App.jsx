@@ -4,8 +4,6 @@ import './App.css'
 import Home from './components/Home'
 import TaskContextProvider from './context/TaskContextProvider'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import EditTask from './components/EditTask'
-import Display from './components/Display'
 
 const router = createBrowserRouter([
   {
@@ -18,13 +16,11 @@ function App() {
 
   return (
     <TaskContextProvider>
-      
       <ChakraProvider>
-      <RouterProvider router = {router}>
-        <Home />
+        <RouterProvider router = {router}>
+            <Home />
         </RouterProvider>
-      </ChakraProvider>
-      
+      </ChakraProvider>     
     </TaskContextProvider>
   )
 }
